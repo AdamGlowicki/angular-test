@@ -4,6 +4,7 @@ import {BehaviorSubject, Subject} from 'rxjs';
 export interface HandlerMenu {
   isOpenSearch: boolean;
   isOpenMenu: boolean;
+  isVisibleSearchIcon: boolean;
 }
 
 @Injectable({
@@ -14,6 +15,7 @@ export class ToolbarServiceService {
   menuService: HandlerMenu = {
     isOpenSearch: false,
     isOpenMenu: false,
+    isVisibleSearchIcon: true
   };
 
   constructor() { }
@@ -29,11 +31,25 @@ export class ToolbarServiceService {
   };
 
   setIsOpenMenu = () => {
-    console.log('klika sie');
-
     this.menuService = {
       ...this.menuService,
       isOpenMenu: !this.menuService.isOpenMenu
+    };
+    this.handlerMenuStream.next(this.menuService);
+  };
+
+  setVisibleSearchIcon = () => {
+    this.menuService = {
+      ...this.menuService,
+      isVisibleSearchIcon: true
+    };
+    this.handlerMenuStream.next(this.menuService);
+  };
+
+  setInvisibleSearchIcon = () => {
+    this.menuService = {
+      ...this.menuService,
+      isVisibleSearchIcon: false
     };
     this.handlerMenuStream.next(this.menuService);
   };

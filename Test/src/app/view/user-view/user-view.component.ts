@@ -51,7 +51,7 @@ export class UserViewComponent implements OnInit {
   isOpen: boolean;
 
   constructor(private viewService: ViewService,
-              private menuHandler: ToolbarServiceService) {
+              public menuHandler: ToolbarServiceService) {
     menuHandler.getHandlerMenuStream().subscribe(condition => {
       this.isOpen = condition.isOpenSearch;
     });

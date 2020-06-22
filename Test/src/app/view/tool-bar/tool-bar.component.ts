@@ -12,10 +12,10 @@ import {ToolbarServiceService} from './toolbar-service.service';
 
         <div class="spacer"></div>
 
-        <a mat-button routerLink='/user'>Użytkownik</a>
-        <a mat-button routerLink="/admin">Admin</a>
+        <a mat-button routerLink='/user' (click)="menuHandler.setVisibleSearchIcon()">Użytkownik</a>
+        <a mat-button routerLink="/admin" (click)="menuHandler.setInvisibleSearchIcon()">Admin</a>
 
-        <button class="search" mat-mini-fab color="accent" (click)="menuHandler.setIsOpenSearch()">
+        <button *ngIf="isVisibleSearchIcon" class="search" mat-mini-fab color="accent" (click)="menuHandler.setIsOpenSearch()">
           <mat-icon>search</mat-icon>
         </button>
     </mat-toolbar>
@@ -24,10 +24,6 @@ import {ToolbarServiceService} from './toolbar-service.service';
 
   `,
   styles: [`
-    .toolbar-title {
-      margin-left: 48px;
-
-    }
     .spacer {
       flex: 1 1 0%;
     }
@@ -36,9 +32,14 @@ import {ToolbarServiceService} from './toolbar-service.service';
     }
   `]
 })
-export class ToolBarComponent implements OnInit{
+export class ToolBarComponent implements OnInit {
+
+  isVisibleSearchIcon: boolean;
 
   constructor(public menuHandler: ToolbarServiceService ) {
+    this.menuHandler.getHandlerMenuStream().subscribe(view => {
+      this.isVisibleSearchIcon = view.isVisibleSearchIcon;
+    });
   }
 
   ngOnInit(): void {
