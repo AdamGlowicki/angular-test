@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
+import {ViewService} from '../view.service';
 
 @Component({
   selector: 'app-search',
@@ -21,10 +22,19 @@ import {FormControl, FormGroup} from '@angular/forms';
 export class SearchComponent implements OnInit {
 
   searchForm: FormGroup;
-  constructor() {
+
+  search = () => {
+    this.searchForm.get('query').valueChanges
+      .subscribe(query => {
+        this.viewService.search(query);
+      });
+  };
+
+  constructor(private viewService: ViewService) {
     this.searchForm = new FormGroup({
       'query': new FormControl()
     });
+    this.search();
   }
 
   ngOnInit(): void {

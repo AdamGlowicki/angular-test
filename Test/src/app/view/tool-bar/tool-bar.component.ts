@@ -5,13 +5,11 @@ import {Component, OnInit} from '@angular/core';
   template: `
     <mat-toolbar class="menu">
       <div class="menu__title">
-        <button mat-flat-button href="/" >Sklep</button>
+        <a mat-button routerLink="/" >Sklep</a>
       </div>
       <div class="menu__links">
         <a mat-button  routerLink='/user' >Użytkownik</a>
-        <a mat-button routerLink="/admin">
-          <mat-icon matTooltip="Admin">menu</mat-icon>
-        </a>
+        <a mat-button routerLink="/admin">Admin</a>
       </div>
     </mat-toolbar>
     <router-outlet></router-outlet>

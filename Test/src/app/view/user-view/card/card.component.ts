@@ -1,50 +1,39 @@
-import {Component, OnInit} from '@angular/core';
-import {ViewService} from '../../view.service';
+import {Component, Input, OnInit} from '@angular/core';
 import {Products} from '../../products';
 
 @Component({
   selector: 'app-card',
   template: `
-    <div class="wrapper">
-      <mat-card role="group" *ngFor="let product of products" >
-        <mat-card-header>
-          <div mat-card-avatar></div>
-          <mat-card-title>
-            Moj kontent
-          </mat-card-title>
-        </mat-card-header>
-        <img [src]="product.photo" [alt]="'Any picture'">
-        <mat-card-content>
-          <p>any describe</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button></button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
 
+    <div class="card">
+      <div class="view overlay">
+        <img class="card-img-top" [src]="product.photo" [alt]="product.name">
+        <a>
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+      <div class="card-body">
+        <h4 class="card-title">{{product.name}}</h4>
+        <hr>
+        <p class="card-text">{{product.describe}}</p>
+        <button><mat-icon matTooltip="Dodaj do koszyka.">shopping_basket</mat-icon></button>
+      </div>
+    </div>
   `,
   styles: [`
-  .wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-    @media (max-width: 640px) {
-      .wrapper {
-        display: grid;
-        grid-template-columns: 1fr;
-      }
+    img {
+      max-height: 30vh;
     }
   `]
 })
 export class CardComponent implements OnInit {
-  products: Products[] = [];
+  @Input('product')
+  product: Products;
 
-  constructor(private service: ViewService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.products = this.service.getProducts();
   }
 
 }
