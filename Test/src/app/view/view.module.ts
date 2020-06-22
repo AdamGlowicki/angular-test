@@ -13,12 +13,16 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
 import {CardComponent} from './user-view/card/card.component';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { SerchComponent } from './serch/serch.component';
+import { SearchComponent } from './search/search.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {ViewService} from './view.service';
+import {products} from './products-data.data';
 
 
 @NgModule({
-  declarations: [ToolBarComponent, UserViewComponent, AdminViewComponent, EditComponent, CardComponent, SerchComponent],
+  declarations: [ToolBarComponent, UserViewComponent, AdminViewComponent, EditComponent, CardComponent, SearchComponent],
   imports: [
     CommonModule,
     ViewRoutingModule,
@@ -28,7 +32,13 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatTooltipModule,
     MatCardModule,
     MatGridListModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+  providers: [
+    ViewService,
+    {provide: 'ProductsData', useValue: products}
   ]
 })
 export class ViewModule { }
