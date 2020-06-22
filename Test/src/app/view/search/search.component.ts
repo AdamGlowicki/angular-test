@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ViewService} from '../view.service';
+import {debounce, distinctUntilChanged, filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
@@ -12,12 +13,7 @@ import {ViewService} from '../view.service';
       </mat-form-field>
     </form>
   `,
-  styles: [`
-  form {
-    margin-top: 32px;
-    margin-left: 32px;
-  }
-  `]
+  styles: []
 })
 export class SearchComponent implements OnInit {
 

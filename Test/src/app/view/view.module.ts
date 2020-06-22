@@ -19,6 +19,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {ViewService} from './view.service';
 import {products} from './products-data.data';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {ToolbarServiceService} from './tool-bar/toolbar-service.service';
 
 
 @NgModule({
@@ -35,9 +38,12 @@ import {products} from './products-data.data';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [
     ViewService,
+    ToolbarServiceService,
     {provide: 'ProductsData', useValue: products}
   ]
 })

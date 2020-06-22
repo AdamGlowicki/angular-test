@@ -1,30 +1,44 @@
 import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {map} from 'rxjs/operators';
+import {ToolbarServiceService} from './toolbar-service.service';
 
 @Component({
   selector: 'app-tool-bar',
   template: `
-    <mat-toolbar class="menu">
-      <div class="menu__title">
-        <a mat-button routerLink="/" >Sklep</a>
-      </div>
-      <div class="menu__links">
-        <a mat-button  routerLink='/user' >Użytkownik</a>
+    <mat-toolbar color="primary">
+      <a mat-button class="toolbar-title" routerLink="/">Sklep</a>
+
+        <div class="spacer"></div>
+
+        <a mat-button routerLink='/user'>Użytkownik</a>
         <a mat-button routerLink="/admin">Admin</a>
-      </div>
+
+        <button class="search" mat-mini-fab color="accent" (click)="menuHandler.setIsOpenSearch()">
+          <mat-icon>search</mat-icon>
+        </button>
     </mat-toolbar>
+
     <router-outlet></router-outlet>
+
   `,
   styles: [`
-  .menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
+    .toolbar-title {
+      margin-left: 48px;
+
+    }
+    .spacer {
+      flex: 1 1 0%;
+    }
+    .search {
+      margin-top: 56px;
+    }
   `]
 })
-export class ToolBarComponent implements OnInit {
+export class ToolBarComponent implements OnInit{
 
-  constructor() {
+  constructor(public menuHandler: ToolbarServiceService ) {
   }
 
   ngOnInit(): void {

@@ -16,7 +16,10 @@ import {Products} from '../../products';
         <h4 class="card-title">{{product.name}}</h4>
         <hr>
         <p class="card-text">{{product.describe}}</p>
-        <button><mat-icon matTooltip="Dodaj do koszyka.">shopping_basket</mat-icon></button>
+        <button mat-raised-button color="primary">
+          <mat-icon>shopping_basket</mat-icon>
+          Dodaj do koszyka
+        </button>
       </div>
     </div>
   `,
