@@ -9,9 +9,13 @@ import {ToolbarServiceService} from '../tool-bar/toolbar-service.service';
       <button mat-icon-button class="menu-button" (click)="menuHandler.setIsOpenMenu()">
         <mat-icon>menu</mat-icon>
       </button>
-      <div class="search" *ngIf="isOpen">
+      <div class="search" *ngIf="isOpenSearch">
         <app-search></app-search>
       </div>
+    </div>
+
+    <div class="category-menu" *ngIf="isOpenMenu">
+      <app-drop-down-menu></app-drop-down-menu>
     </div>
 
     <div class="wrapper">
@@ -38,6 +42,11 @@ import {ToolbarServiceService} from '../tool-bar/toolbar-service.service';
       align-self: center;
     }
 
+    .category-menu {
+      position: fixed;
+      z-index: 1;
+      background-color: white;
+    }
     @media (max-width: 640px) {
       .wrapper {
         grid-template-columns: 1fr;
@@ -48,12 +57,14 @@ import {ToolbarServiceService} from '../tool-bar/toolbar-service.service';
 export class UserViewComponent implements OnInit {
 
   products;
-  isOpen: boolean;
+  isOpenSearch: boolean;
+  isOpenMenu: boolean;
 
   constructor(private viewService: ViewService,
               public menuHandler: ToolbarServiceService) {
     menuHandler.getHandlerMenuStream().subscribe(condition => {
-      this.isOpen = condition.isOpenSearch;
+      this.isOpenSearch = condition.isOpenSearch;
+      this.isOpenMenu = condition.isOpenMenu;
     });
   }
 

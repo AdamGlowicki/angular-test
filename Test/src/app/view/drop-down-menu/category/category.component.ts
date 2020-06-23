@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-admin-view',
+  selector: 'app-category',
   template: `
-    <app-drop-down-menu></app-drop-down-menu>
+
   `,
   styles: []
 })
-export class AdminViewComponent implements OnInit {
+export class CategoryComponent implements OnInit {
 
   constructor() { }
 

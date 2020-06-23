@@ -3,9 +3,7 @@ import {Category} from './category.enum';
 export interface Products {
   id: number;
   name: string;
-  price: number;
-  price2?: number;
-  price3?: number;
+  price: number[];
   describe: string;
   category: Category;
   photo: string;

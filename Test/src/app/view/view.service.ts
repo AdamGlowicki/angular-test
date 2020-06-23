@@ -1,6 +1,6 @@
 import {Inject, Injectable, Optional} from '@angular/core';
 import {Products} from './products';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import 'rxjs-compat/add/observable/of';
 
 @Injectable({
@@ -24,5 +24,18 @@ export class ViewService {
   search = (query) => {
     const filteredProducts = this.products.filter(product => product.name.toLowerCase().includes(query.toLowerCase()));
     this.productsStream.next(filteredProducts);
+  };
+
+  minPrice = (from) => {
+    const filtered = this.products.filter(({price}) => price.sort((a, b) => a - b)[0] >= from);
+    this.productsStream.next(filtered);
+  };
+  maxPrice = (to) => {
+    const filtered = this.products.filter(({price}) => price.sort((a, b) => a - b)[price.length - 1] <= to);
+    this.productsStream.next(filtered);
+  };
+
+  resetFilter = () => {
+    this.productsStream.next(this.products);
   };
 }

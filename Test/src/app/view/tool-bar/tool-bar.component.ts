@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {map} from 'rxjs/operators';
 import {ToolbarServiceService} from './toolbar-service.service';
+import {NavigationEnd, Router} from '@angular/router';
+import {filter, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-tool-bar',
@@ -12,10 +11,10 @@ import {ToolbarServiceService} from './toolbar-service.service';
 
         <div class="spacer"></div>
 
-        <a mat-button routerLink='/user' (click)="menuHandler.setVisibleSearchIcon()">Użytkownik</a>
-        <a mat-button routerLink="/admin" (click)="menuHandler.setInvisibleSearchIcon()">Admin</a>
+        <a mat-button routerLink='/user'>Użytkownik</a>
+        <a mat-button routerLink="/admin">Admin</a>
 
-        <button *ngIf="isVisibleSearchIcon" class="search" mat-mini-fab color="accent" (click)="menuHandler.setIsOpenSearch()">
+        <button *ngIf="checkIsNotAdmin()" class="search" mat-mini-fab color="accent" (click)="menuHandler.setIsOpenSearch()">
           <mat-icon>search</mat-icon>
         </button>
     </mat-toolbar>
@@ -34,13 +33,22 @@ import {ToolbarServiceService} from './toolbar-service.service';
 })
 export class ToolBarComponent implements OnInit {
 
-  isVisibleSearchIcon: boolean;
+  path: string;
 
-  constructor(public menuHandler: ToolbarServiceService ) {
-    this.menuHandler.getHandlerMenuStream().subscribe(view => {
-      this.isVisibleSearchIcon = view.isVisibleSearchIcon;
-    });
+  constructor(public menuHandler: ToolbarServiceService,
+              public router: Router) {
+    router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map((path: NavigationEnd) => path.url)
+    )
+      .subscribe(path => {
+        this.path = path;
+      });
   }
+
+  checkIsNotAdmin = () => (
+    this.path !== '/admin'
+  )
 
   ngOnInit(): void {
   }

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {ViewModule} from './view/view.module';
+import { NgxPopper } from 'angular-popper';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {ViewModule} from './view/view.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
-    ViewModule
+    ViewModule,
+    NgxPopper
   ],
   providers: [],
   bootstrap: [AppComponent]
