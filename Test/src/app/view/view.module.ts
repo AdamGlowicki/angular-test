@@ -14,7 +14,7 @@ import {MatCardModule} from '@angular/material/card';
 import {CardComponent} from './user-view/card/card.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {SearchComponent} from './search/search.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {ViewService} from './view.service';
@@ -25,8 +25,8 @@ import {ToolbarServiceService} from './tool-bar/toolbar-service.service';
 import {DropDownMenuComponent} from './drop-down-menu/drop-down-menu.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {PriceSelectorComponent} from './drop-down-menu/price-selector/price-selector.component';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {CategoryComponent} from './drop-down-menu/category/category.component';
+import {MAT_CHECKBOX_CLICK_ACTION, MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -46,12 +46,14 @@ import {CategoryComponent} from './drop-down-menu/category/category.component';
     MatSidenavModule,
     MatListModule,
     MatMenuModule,
-    MatAutocompleteModule,
+    FormsModule,
+    MatCheckboxModule,
   ],
   providers: [
     ViewService,
     ToolbarServiceService,
-    {provide: 'ProductsData', useValue: products}
+    {provide: 'ProductsData', useValue: products},
+    {provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'check'}
   ]
 })
 export class ViewModule {

@@ -28,6 +28,7 @@ import {ToolbarServiceService} from '../tool-bar/toolbar-service.service';
       grid-template-columns: 1fr 1fr;
       gap: 32px;
     }
+
     .sub-menu {
       display: flex;
       flex-direction: row;
@@ -35,18 +36,22 @@ import {ToolbarServiceService} from '../tool-bar/toolbar-service.service';
       margin-top: 16px;
       margin-bottom: 16px;
     }
+
     .search {
       margin-top: 16px;
     }
+
     .menu-button {
       align-self: center;
     }
 
     .category-menu {
-      position: fixed;
+      position: absolute;
       z-index: 1;
       background-color: white;
+      max-width: 200px;
     }
+
     @media (max-width: 640px) {
       .wrapper {
         grid-template-columns: 1fr;

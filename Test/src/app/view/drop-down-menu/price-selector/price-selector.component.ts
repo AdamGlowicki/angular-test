@@ -8,7 +8,7 @@ import {ViewService} from '../../view.service';
     <form [formGroup]="priceForm">
       <mat-form-field placeholder class="price-selector">
         <mat-label>Cena od:</mat-label>
-        <input mat- matInput type="text" formControlName="from" class="form-control" placeholder="Cena od:" autocomplete="off">
+        <input matInput type="text" formControlName="from" class="form-control" placeholder="Cena od:" autocomplete="off">
       </mat-form-field>
       <mat-form-field placeholder class="price-selector">
         <mat-label>Cena do:</mat-label>
@@ -23,7 +23,9 @@ import {ViewService} from '../../view.service';
     }
 
     .price-selector {
-      max-width: 150px;
+      max-width: 100px;
+      font-size: 8px;
+      padding: 8px;
     }
     @media (max-width: 640px) {
       form {
@@ -53,8 +55,8 @@ export class PriceSelectorComponent implements OnInit {
 
   constructor(private viewService: ViewService) {
     this.priceForm = new FormGroup({
-      'from': new FormControl(),
-      'to': new FormControl(),
+      from: new FormControl(this.viewService.from),
+      to: new FormControl(this.viewService.to),
     });
 
     this.search();

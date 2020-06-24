@@ -7,4 +7,5 @@ export interface Products {
   describe: string;
   category: Category;
   photo: string;
+  check?: boolean;
 }
