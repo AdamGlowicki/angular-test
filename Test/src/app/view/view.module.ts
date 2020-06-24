@@ -5,7 +5,6 @@ import {ViewRoutingModule} from './view-routing.module';
 import {ToolBarComponent} from './tool-bar/tool-bar.component';
 import {UserViewComponent} from './user-view/user-view.component';
 import {AdminViewComponent} from './admin-view/admin-view.component';
-import {EditComponent} from './admin-view/edit.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -27,10 +26,13 @@ import {MatMenuModule} from '@angular/material/menu';
 import {PriceSelectorComponent} from './drop-down-menu/price-selector/price-selector.component';
 import {CategoryComponent} from './drop-down-menu/category/category.component';
 import {MAT_CHECKBOX_CLICK_ACTION, MatCheckboxModule} from '@angular/material/checkbox';
+import {CardDetailComponent} from './admin-view/card-detail/card-detail.component';
+import {AdminServiceService} from './admin-service.service';
+import {ProductsTableComponent} from './admin-view/products-table/products-table.component';
 
 
 @NgModule({
-  declarations: [ToolBarComponent, UserViewComponent, AdminViewComponent, EditComponent, CardComponent, SearchComponent, DropDownMenuComponent, PriceSelectorComponent, CategoryComponent],
+  declarations: [ToolBarComponent, UserViewComponent, AdminViewComponent, CardComponent, SearchComponent, DropDownMenuComponent, PriceSelectorComponent, CategoryComponent, CardDetailComponent, ProductsTableComponent],
   imports: [
     CommonModule,
     ViewRoutingModule,
@@ -51,6 +53,7 @@ import {MAT_CHECKBOX_CLICK_ACTION, MatCheckboxModule} from '@angular/material/ch
   ],
   providers: [
     ViewService,
+    AdminServiceService,
     ToolbarServiceService,
     {provide: 'ProductsData', useValue: products},
     {provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'check'}

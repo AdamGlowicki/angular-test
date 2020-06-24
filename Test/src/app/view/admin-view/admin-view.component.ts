@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-admin-view',
   template: `
-    <app-drop-down-menu></app-drop-down-menu>
+    <div class="wrapper mt-4">
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+      <app-products-table></app-products-table>
+    </div>
   `,
-  styles: []
+  styles: [`
+    .wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+  `]
 })
 export class AdminViewComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

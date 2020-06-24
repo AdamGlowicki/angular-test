@@ -9,14 +9,14 @@ import {filter, map} from 'rxjs/operators';
     <mat-toolbar color="primary">
       <a mat-button class="toolbar-title" routerLink="/">Sklep</a>
 
-        <div class="spacer"></div>
+      <div class="spacer"></div>
 
-        <a mat-button routerLink='/user'>Użytkownik</a>
-        <a mat-button routerLink="/admin">Admin</a>
+      <a mat-button routerLink='/user'>Użytkownik</a>
+      <a mat-button routerLink="/admin">Admin</a>
 
-        <button *ngIf="checkIsNotAdmin()" class="search" mat-mini-fab color="accent" (click)="menuHandler.setIsOpenSearch()">
-          <mat-icon>search</mat-icon>
-        </button>
+      <button *ngIf="checkIsNotAdmin()" class="search" mat-mini-fab color="accent" (click)="menuHandler.setIsOpenSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
     </mat-toolbar>
 
     <router-outlet></router-outlet>
@@ -26,6 +26,7 @@ import {filter, map} from 'rxjs/operators';
     .spacer {
       flex: 1 1 0%;
     }
+
     .search {
       margin-top: 56px;
     }
@@ -47,8 +48,8 @@ export class ToolBarComponent implements OnInit {
   }
 
   checkIsNotAdmin = () => (
-    this.path !== '/admin'
-  )
+    this.path === '/user'
+  );
 
   ngOnInit(): void {
   }
