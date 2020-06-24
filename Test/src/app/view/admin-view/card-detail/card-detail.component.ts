@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminServiceService} from '../../admin-service.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {getCategories} from '../../category.enum';
+import {Products} from '../../products';
 
 @Component({
   selector: 'app-card-detail',
@@ -16,13 +18,15 @@ import {ActivatedRoute, Router} from '@angular/router';
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Cena</label>
-        <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Cena"
-               [(ngModel)]="product.price">
+        <input *ngFor="let price of product.price; let i = index" [value]="price" (change)="handlePrice($event, i)" type="number"
+               class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Cena"
+        >
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Kategoria</label>
-        <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Kategoria"
-               [(ngModel)]="product.category">
+        <label for="exampleFormControlSelect1">Example select</label>
+        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="product.category" (change)="setCategory($event)">
+          <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Url</label>
@@ -45,7 +49,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class CardDetailComponent implements OnInit {
 
-  product;
+  product: Products;
+  categories;
 
   save = (product) => {
     this.adminService.save(product);
@@ -55,8 +60,18 @@ export class CardDetailComponent implements OnInit {
   constructor(private adminService: AdminServiceService,
               private router: Router,
               private activeRout: ActivatedRoute) {
-
+    this.categories = Object.values(getCategories());
   }
+
+  setCategory = ($event) => {
+    this.product.category = $event.target.value;
+  };
+
+  handlePrice = ($event, index) => {
+    const copy = Object.assign({}, this.product);
+    copy.price[index] = $event.target.value;
+    this.product = copy;
+  };
 
   ngOnInit(): void {
     this.activeRout.params.subscribe(params => {

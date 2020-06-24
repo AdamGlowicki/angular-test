@@ -75,7 +75,7 @@ export const products: Products[] = [
     photo: 'https://cdn.pixabay.com/photo/2016/06/16/08/42/monster-1460885__340.png'
   },
   {
-    id: 1,
+    id: 10,
     name: 'Głośniki',
     price: [1900, 3400],
     describe: 'Opis głośnika.',

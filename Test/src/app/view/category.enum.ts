@@ -1,12 +1,16 @@
 export enum Category {
-  Tv = 'tv',
-  Radio = 'radio',
-  Smartphone = 'smartphone',
-  Fridge = 'fridge',
-  Toaster = 'toaster',
-  Washer = 'washer',
-  Dryer = 'dryer',
-  Notebook = 'notebook',
-  HeadPhones = 'headphones',
-  Speakers = 'speakers',
-  }
+  Tv = 'Telewizor',
+  Radio = 'Radio',
+  Smartphone = 'Telefon',
+  Fridge = 'Lodówka',
+  Toaster = 'Toster',
+  Washer = 'Pralka',
+  Dryer = 'Suszarka',
+  Notebook = 'Notebook',
+  HeadPhones = 'Słuchawki',
+  Speakers = 'Głośnik',
+}
+
+export const getCategories = () => {
+  return Category;
+};

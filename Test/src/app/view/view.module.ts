@@ -29,6 +29,8 @@ import {MAT_CHECKBOX_CLICK_ACTION, MatCheckboxModule} from '@angular/material/ch
 import {CardDetailComponent} from './admin-view/card-detail/card-detail.component';
 import {AdminServiceService} from './admin-service.service';
 import {ProductsTableComponent} from './admin-view/products-table/products-table.component';
+import {MatSelectModule} from '@angular/material/select';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -50,6 +52,8 @@ import {ProductsTableComponent} from './admin-view/products-table/products-table
     MatMenuModule,
     FormsModule,
     MatCheckboxModule,
+    MatSelectModule,
+    NgSelectModule,
   ],
   providers: [
     ViewService,
