@@ -19,9 +19,15 @@ import {filter, map} from 'rxjs/operators';
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Cena</label>
-        <input *ngFor="let price of product.price; let i = index" [value]="price" (change)="handlePrice($event, i)" type="number"
-               class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Cena"
-        >
+        <div *ngIf="product.id">
+          <input *ngFor="let price of product.price; let i = index" [value]="price" (change)="handlePrice($event, i)" type="number"
+                 class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Cena"
+          >
+        </div>
+        <div>
+          <input [value]="product.price" (change)="handleAddPrice($event)" type="number"
+                 class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Cena">
+        </div>
       </div>
       <div class="form-group">
         <label for="exampleFormControlSelect1">Example select</label>
@@ -75,9 +81,15 @@ export class CardDetailComponent implements OnInit {
     )
       .subscribe(path => {
         this.path = path;
-        console.log(this.path);
       });
   }
+
+  handleAddPrice = ($event) => {
+    if (this.product.price === undefined) {
+      this.product.price = [];
+    }
+    this.product.price.push($event.target.value);
+  };
 
   setCategory = ($event) => {
     this.product.category = $event.target.value;
