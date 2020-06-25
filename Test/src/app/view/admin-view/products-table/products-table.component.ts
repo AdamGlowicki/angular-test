@@ -26,6 +26,8 @@ import {Products} from '../../products';
       </tr>
       </tbody>
     </table>
+    <button mat-button routerLink="add">Dodaj nowy</button>
+
   `,
   styles: [`
     td {

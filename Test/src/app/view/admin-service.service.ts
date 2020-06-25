@@ -21,9 +21,21 @@ export class AdminServiceService {
   };
 
   save(product) {
+    if (product.id) {
+      const index = this.products.findIndex(({id}) => (
+        id === product.id
+      ));
+      this.products.splice(index, 1, product);
+    } else {
+      product.id = Date.now()
+      this.products.push(product);
+    }
+  }
+
+  delete = (product) => {
     const index = this.products.findIndex(({id}) => (
       id === product.id
     ));
-    this.products.splice(index, 1, product);
+    this.products.splice(index, 1);
   }
 }

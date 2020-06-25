@@ -19,6 +19,7 @@ const routes: Routes = [
         children: [
           {path: '', component: CardDetailComponent},
           {path: ':id', component: CardDetailComponent},
+          {path: 'add', component: CardDetailComponent},
         ]
       },
     ]
