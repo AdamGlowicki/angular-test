@@ -6,17 +6,17 @@ import {FormControl, FormGroup} from '@angular/forms';
   selector: 'app-category',
   template: `
     <form [formGroup]="checked" class="wrapper">
-        <h3>Kategorie</h3>
-        <mat-checkbox [formControlName]="category.category" *ngFor="let category of categories">{{category.category}}</mat-checkbox>
+      <h3>Kategorie</h3>
+      <mat-checkbox [formControlName]="category.category" *ngFor="let category of categories">{{category.category}}</mat-checkbox>
     </form>
   `,
   styles: [`
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    margin-left: 16px;
-    font-size: 12px;
-  }
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      margin-left: 16px;
+      font-size: 12px;
+    }
   `]
 })
 export class CategoryComponent implements OnInit {
@@ -31,9 +31,6 @@ export class CategoryComponent implements OnInit {
         category.checked = value;
         this.viewService.updateCategory(category);
         this.viewService.updateProducts();
-        if (!this.viewService.checkedCategoryLength) {
-          this.viewService.resetFilter();
-        }
       });
     });
   };
@@ -56,5 +53,4 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
