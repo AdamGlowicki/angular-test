@@ -27,6 +27,7 @@ import {ViewService} from '../../view.service';
       font-size: 8px;
       padding: 8px;
     }
+
     @media (max-width: 640px) {
       form {
         display: grid;
@@ -38,6 +39,7 @@ import {ViewService} from '../../view.service';
 export class PriceSelectorComponent implements OnInit {
 
   priceForm: FormGroup;
+  priceRange: {};
 
   search = () => {
     this.priceForm.get('from').valueChanges
@@ -47,16 +49,16 @@ export class PriceSelectorComponent implements OnInit {
     this.priceForm.get('to').valueChanges
       .subscribe(to => {
         this.viewService.maxPrice(to);
-        if (!to.length) {
-          this.viewService.resetFilter();
-        }
       });
   };
 
   constructor(private viewService: ViewService) {
+    this.viewService.getPriceRangeStream().subscribe(priceRange => {
+      this.priceRange = priceRange;
+    });
     this.priceForm = new FormGroup({
-      from: new FormControl(this.viewService.from),
-      to: new FormControl(this.viewService.to),
+      from: new FormControl(this.viewService.priceRange.from),
+      to: new FormControl(this.viewService.priceRange.to),
     });
 
     this.search();
