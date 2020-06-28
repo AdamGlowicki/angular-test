@@ -48,7 +48,7 @@ export class ToolBarComponent implements OnInit {
   }
 
   checkIsNotAdmin = () => (
-    this.path === '/user'
+    this.path === '/user' || this.path === '/'
   );
 
   ngOnInit(): void {
