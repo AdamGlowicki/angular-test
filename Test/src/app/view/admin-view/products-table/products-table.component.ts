@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminServiceService} from '../../admin-service.service';
 import {Products} from '../../products';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-products-table',
@@ -16,7 +17,7 @@ import {Products} from '../../products';
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let product of products"
+      <tr *ngFor="let product of products | async"
           [routerLink]="product.id">
         <th scope="row">{{product.id}}</th>
         <td>{{product.name}}</td>
@@ -42,7 +43,7 @@ import {Products} from '../../products';
 })
 export class ProductsTableComponent implements OnInit {
 
-  products: Products[] = [];
+  products: Observable<Products[]>;
 
   constructor(private adminService: AdminServiceService) {
     this.products = this.adminService.getProducts();
