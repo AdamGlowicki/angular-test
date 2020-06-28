@@ -8,7 +8,7 @@ import {filter, map} from 'rxjs/operators';
 @Component({
   selector: 'app-card-detail',
   template: `
-    <div *ngIf="product.id || path === '/admin/add'" class="wrapper p-3">
+    <div *ngIf="isDisplayEditWindow()" class="wrapper p-3">
       <div class="form-group">
         <h3>{{path === '/admin/add' ? 'Dodaj' : 'Edytuj'}}</h3>
       </div>
@@ -19,13 +19,13 @@ import {filter, map} from 'rxjs/operators';
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Cena</label>
-        <div *ngIf="product.id">
+        <div *ngIf="isDisplayExistPriceInput(this.path, this.product)">
           <input *ngFor="let price of product.price; let i = index" [value]="price" (change)="handlePrice($event, i)" type="number"
                  class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Cena"
           >
         </div>
         <div>
-          <input [value]="product.price" (change)="handleAddPrice($event)" type="number"
+          <input [value]="displayEmptyValueIfOnePrice(this.product)" (change)="handleAddPrice($event)" type="number"
                  class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Cena">
         </div>
       </div>
@@ -63,13 +63,14 @@ export class CardDetailComponent implements OnInit {
 
   save = (product) => {
     this.adminService.save(product);
-    this.router.navigate(['admin']);
+    this.router.navigate(['admin', product.id]);
+
   };
+
   delete = (product) => {
     this.adminService.delete(product);
     this.router.navigate(['admin']);
   };
-
 
   constructor(private adminService: AdminServiceService,
               private router: Router,
@@ -89,6 +90,7 @@ export class CardDetailComponent implements OnInit {
       this.product.price = [];
     }
     this.product.price.push($event.target.value);
+    $event.target.value = '';
   };
 
   setCategory = ($event) => {
@@ -99,14 +101,37 @@ export class CardDetailComponent implements OnInit {
     const copy = Object.assign({}, this.product);
     copy.price[index] = $event.target.value;
     this.product = copy;
+    $event.target.value = '';
   };
+
+  isProductExist = (product) => (
+    product.id
+  );
+
+  isAdminPath = (path: string) => (
+    path === '/admin/add'
+  );
+
+  isDisplayEditWindow = () => (
+    this.isAdminPath(this.path) || this.isProductExist(this.product)
+  )
+
+
+  isDisplayExistPriceInput = (path: string, product: Products) => (
+    !this.isAdminPath(path) && this.isProductExist(product)
+  );
+
+  displayEmptyValueIfOnePrice = (product: Products) => (
+    product.price.length === 1 ? '' : product.price
+  )
 
   ngOnInit(): void {
     this.activeRout.params.subscribe(params => {
       const id = parseInt(params['id']);
 
-      const findProduct = this.adminService.getProductsById(id);
-      this.product = Object.assign({}, findProduct);
+      this.adminService.getProductsById(id).subscribe(product => {
+        this.product = Object.assign({}, product);
+      });
     });
   }
 }

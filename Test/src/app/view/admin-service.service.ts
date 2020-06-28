@@ -1,5 +1,6 @@
 import {Inject, Injectable, Optional} from '@angular/core';
 import {Products} from './products';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,17 +8,24 @@ import {Products} from './products';
 export class AdminServiceService {
 
   products: Products[] = [];
+  product: Products;
 
   constructor(@Optional() @Inject('ProductsData') productsData: Products[]) {
     this.products = productsData;
   }
 
+  productsStream: Subject<Products[]> = new BehaviorSubject(this.products);
+  productStream: Subject<Products> = new BehaviorSubject(this.product);
+
   getProducts = () => {
-    return this.products;
+    this.productsStream.next(this.products);
+    return this.productsStream.asObservable();
   };
 
   getProductsById = (productId) => {
-    return this.products.find(({id}) => id === productId);
+    this.product =  this.products.find(({id}) => id === productId);
+    this.productStream.next(this.product);
+    return this.productStream.asObservable();
   };
 
   save(product) {
