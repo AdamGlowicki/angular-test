@@ -3,6 +3,7 @@ import {Products} from './products';
 import {BehaviorSubject, Subject} from 'rxjs';
 import 'rxjs-compat/add/observable/of';
 import {Category} from './category.enum';
+import {SortOptions} from './sortOptions.enum';
 
 export interface SearchCategory {
   category: Category;
@@ -12,6 +13,10 @@ export interface SearchCategory {
 export interface PriceRange {
   from: number;
   to: number;
+}
+
+export interface SortOptions {
+  optionList: string[];
 }
 
 @Injectable({
@@ -37,11 +42,40 @@ export class ViewService {
   filteredByPrice: Products[] = [];
   priceRange: PriceRange;
   query: string;
+  sortOption: SortOptions;
 
 
   productsStream: Subject<Products[]> = new BehaviorSubject(this.products);
   categoryStream: Subject<SearchCategory[]> = new BehaviorSubject(this.categories);
   priceRangeStream: Subject<{}> = new BehaviorSubject(this.priceRange);
+  sortOptionStream: Subject<SortOptions> = new BehaviorSubject(this.sortOption);
+
+  getSortOptionStream = () => {
+    this.sortOptionStream.next(this.sortOption);
+    return this.sortOptionStream.asObservable();
+  };
+
+
+  getSmallestValue = (arr: any[]): number => (
+    arr.sort((a, b) => a - b)[0]
+  );
+
+  sort = (option) => {
+    const filtered = this.getArrayWithSameObject(this.filteredByCategory, this.filteredByPrice);
+    switch (option) {
+      case SortOptions.asc:
+        filtered.sort((a, b) => this.getSmallestValue(a.price) - this.getSmallestValue(b.price));
+        break;
+      case SortOptions.desc:
+        filtered.sort((a, b) => this.getSmallestValue(b.price) - this.getSmallestValue(a.price));
+        break;
+    }
+    return this.productsStream.next(filtered);
+  };
+
+  resetSort = () => {
+    this.sortOptionStream.next(this.sortOption = undefined);
+  };
 
   getArrayWithSameObject = (arr1: any[], arr2: any[]) => (
     arr1.filter((element) => arr2.find(({id}) => element.id === id))
@@ -76,6 +110,7 @@ export class ViewService {
       filtered = this.getArrayWithSameObject(this.recoverProducts, this.filteredByPrice);
     }
     this.productsStream.next(filtered);
+    this.resetSort();
   };
 
   search = (query) => {
@@ -86,19 +121,21 @@ export class ViewService {
 
   minPrice = (from) => {
     this.priceRange.from = from;
-    this.filteredByPrice = this.products.filter(({price}) => price.sort((a, b) => a - b)[0] >= from);
+    this.filteredByPrice = this.products.filter(({price}) => this.getSmallestValue(price) >= from);
     const filtered = this.getArrayWithSameObject(this.filteredByCategory, this.filteredByPrice);
     this.productsStream.next(filtered);
+    this.resetSort();
   };
 
   maxPrice = (to) => {
     this.priceRange.to = to;
-    this.filteredByPrice = this.products.filter(({price}) => price.sort((a, b) => a - b)[0] <= to);
+    this.filteredByPrice = this.products.filter(({price}) => this.getSmallestValue(price) <= to);
     let filtered = this.getArrayWithSameObject(this.filteredByPrice, this.filteredByCategory);
     if (!this.priceRange.to) {
       this.filteredByPrice = this.recoverProducts;
       filtered = this.getArrayWithSameObject(this.recoverProducts, this.filteredByCategory);
     }
     this.productsStream.next(filtered);
+    this.resetSort();
   };
 }

@@ -31,10 +31,11 @@ import {AdminServiceService} from './admin-service.service';
 import {ProductsTableComponent} from './admin-view/products-table/products-table.component';
 import {MatSelectModule} from '@angular/material/select';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {SortComponent} from './sort/sort.component';
 
 
 @NgModule({
-  declarations: [ToolBarComponent, UserViewComponent, AdminViewComponent, CardComponent, SearchComponent, DropDownMenuComponent, PriceSelectorComponent, CategoryComponent, CardDetailComponent, ProductsTableComponent],
+  declarations: [ToolBarComponent, UserViewComponent, AdminViewComponent, CardComponent, SearchComponent, DropDownMenuComponent, PriceSelectorComponent, CategoryComponent, CardDetailComponent, ProductsTableComponent, SortComponent],
   imports: [
     CommonModule,
     ViewRoutingModule,

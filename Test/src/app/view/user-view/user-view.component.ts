@@ -18,6 +18,10 @@ import {ToolbarServiceService} from '../tool-bar/toolbar-service.service';
       <app-drop-down-menu></app-drop-down-menu>
     </div>
 
+    <div class="d-flex justify-content-end">
+      <app-sort></app-sort>
+    </div>
+
     <div class="wrapper">
       <app-card [product]="product" *ngFor="let product of products | async"></app-card>
     </div>

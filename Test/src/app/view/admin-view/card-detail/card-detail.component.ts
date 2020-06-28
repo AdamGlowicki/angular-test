@@ -30,7 +30,7 @@ import {filter, map} from 'rxjs/operators';
         </div>
       </div>
       <div class="form-group">
-        <label for="exampleFormControlSelect1">Example select</label>
+        <label for="exampleFormControlSelect1">Kategoria</label>
         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="product.category" (change)="setCategory($event)">
           <option *ngFor="let category of categories" [value]="category">{{category}}</option>
         </select>
@@ -114,7 +114,7 @@ export class CardDetailComponent implements OnInit {
 
   isDisplayEditWindow = () => (
     this.isAdminPath(this.path) || this.isProductExist(this.product)
-  )
+  );
 
 
   isDisplayExistPriceInput = (path: string, product: Products) => (
@@ -123,7 +123,7 @@ export class CardDetailComponent implements OnInit {
 
   displayEmptyValueIfOnePrice = (product: Products) => (
     product.price.length === 1 ? '' : product.price
-  )
+  );
 
   ngOnInit(): void {
     this.activeRout.params.subscribe(params => {
